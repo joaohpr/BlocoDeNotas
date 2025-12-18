@@ -1,4 +1,56 @@
 package model;
 
 public class User {
+    private String userName;
+    private String emailUser;
+    private int senhaUser;
+
+
+   public User(String nameInput,String emailInput,int senhaInput){
+       this.userName = nameInput;
+       this.emailUser = emailInput;
+       this.senhaUser = senhaInput;
+   }
+
+   public User(){
+
+   }
+
+   public String getUserName(){
+       return this.userName;
+   }
+
+   public void setUserName(String nameInput){
+       this.userName = nameInput;
+   }
+
+
+   public String getEmailUser(){
+       return this.emailUser;
+   }
+
+   public void setEmailUser(String emailInput){
+       this.emailUser = emailInput;
+   }
+
+
+   public int getSenhaUser(){
+       return this.senhaUser;
+   }
+
+   public void setSenhaUser(int senhaInput){
+       this.senhaUser = senhaInput;
+   }
+
+
+   @Override
+   public String toString(){
+      return " User \n Name : "+this.userName + " \n Email : "+this.emailUser+"\n Senha : "+this.senhaUser;
+   }
+
+
+
+
+
+
 }
