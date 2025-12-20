@@ -1,20 +1,25 @@
 package model;
 
+import bd.BancoDeDadosNotas;
+
 public class User {
     private String userName;
     private String emailUser;
     private int senhaUser;
+    BancoDeDadosNotas bancoDeDadosNotasUser;
 
 
    public User(String nameInput,String emailInput,int senhaInput){
        this.userName = nameInput;
        this.emailUser = emailInput;
        this.senhaUser = senhaInput;
+       bancoDeDadosNotasUser = new BancoDeDadosNotas();
    }
 
    public User(){
 
    }
+
 
    public String getUserName(){
        return this.userName;
@@ -47,10 +52,6 @@ public class User {
    public String toString(){
       return " User \n Name : "+this.userName + " \n Email : "+this.emailUser+"\n Senha : "+this.senhaUser;
    }
-
-
-
-
 
 
 }
