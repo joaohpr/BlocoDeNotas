@@ -6,7 +6,7 @@ public class User {
     private String userName;
     private String emailUser;
     private int senhaUser;
-    BancoDeDadosNotas bancoDeDadosNotasUser;
+    public BancoDeDadosNotas bancoDeDadosNotasUser;
 
 
    public User(String nameInput,String emailInput,int senhaInput){
