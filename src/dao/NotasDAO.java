@@ -32,11 +32,13 @@ public class NotasDAO {
                 break;
             }
         }
+        usuarioInput.bancoDeDadosNotasUser.setIndice(bancoNotaDAO.getIndice() - 1);
     }
 
 
     public void adicionarNota(User usuario, Notas notaInput) {
         usuario.bancoDeDadosNotasUser.notas.add(notaInput);
+        usuario.bancoDeDadosNotasUser.setIndice(bancoNotaDAO.getIndice()+1);
     }
 
 
@@ -71,6 +73,40 @@ public class NotasDAO {
     }
 
 
+    public void removerTodasNotas(User usuario){
+       for(int i = 0;i < usuario.bancoDeDadosNotasUser.getIndice();i++) {
+
+           usuario.bancoDeDadosNotasUser.notas.add(i, null);
+       }
+    }
+
+    public String allNotes(User usuario) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        retorno.append("===== TODAS AS NOTAS =====\n");
+
+        // for-each para percorrer as notas
+        for (Notas nota : usuario.bancoDeDadosNotasUser.notas) {
+
+            retorno.append("Título: ")
+                    .append(nota.getTitle())
+                    .append("\n");
+
+            retorno.append("Texto:\n")
+                    .append(nota.getNota())
+                    .append("\n");
+
+            retorno.append("-------------------------\n");
+        }
+
+        return retorno.toString();
+    }
 
 
 }
+
+
+
+
+
