@@ -13,7 +13,7 @@ Funcionalidades
 - Editar notas existentes
 - Excluir notas
 - Listar todas as notas
-- Identificação das notas por um código hexadecimal
+- Identificação das notas por um código 
 - Sistema de usuário com login
 
 Cada usuário possui:
