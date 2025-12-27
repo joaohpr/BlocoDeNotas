@@ -19,7 +19,7 @@ Funcionalidades
 Cada usuário possui:
 - Nome
 - Email
-- Senha de 6 dígitos
+- Senha com  dígitos
 
 Tecnologias utilizadas
 
