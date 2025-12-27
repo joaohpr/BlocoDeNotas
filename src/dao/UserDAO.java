@@ -44,5 +44,22 @@ public class UserDAO {
         user.setSenhaUser(senhaSet);
     }
 
+    public boolean userExite(User userInput){
+
+        boolean retorno = false;
+
+        for(int i = 0;i < usuarios.size();i++){
+
+            User userAux = usuarios.getUser(i);
+
+            if(userAux.equals(userInput)){
+                retorno = true;
+                break;
+            }
+        }
+
+        return retorno;
+    }
+
 
 }
