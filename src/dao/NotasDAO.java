@@ -108,22 +108,20 @@ public class NotasDAO {
     }
 
 
-    public boolean notaExiste(Notas notaInput){
+    public boolean notaExiste(User userInput,Notas notaInput){
 
         boolean retorno = false;
 
+        for(int i = 0 ;i < userInput.bancoDeDadosNotasUser.notas.size();i++){
+
+            Notas notaAux = userInput.bancoDeDadosNotasUser.notas.get(i);
 
 
-
-
-
-
-
-
-
-
-
-
+            if(notaAux.equals(notaInput)){
+                retorno = true;
+                break;
+            }
+        }
 
         return retorno;
     }
