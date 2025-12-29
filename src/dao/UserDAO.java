@@ -40,10 +40,6 @@ public class UserDAO {
     }
 
 
-    public void mudarSenhaUser(User user,int senhaSet){
-        user.setSenhaUser(senhaSet);
-    }
-
     public boolean userExite(User userInput){
 
         boolean retorno = false;

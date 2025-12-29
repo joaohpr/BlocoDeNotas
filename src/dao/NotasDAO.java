@@ -17,7 +17,7 @@ public class NotasDAO {
     public void criarNota(User usuarioInput, String title, String nota) {
 
 
-        int id = aletorio.nextInt(1000);
+        int id = aletorio.nextInt(100000);
 
         usuarioInput.bancoDeDadosNotasUser.notas
                 .add(new Notas(title,nota,id));
@@ -97,10 +97,35 @@ public class NotasDAO {
                     .append(nota.getNota())
                     .append("\n");
 
+            retorno.append(" Id : ")
+                    .append(nota.getId())
+                    .append("\n");
+
             retorno.append("-------------------------\n");
         }
 
         return retorno.toString();
+    }
+
+
+    public boolean notaExiste(Notas notaInput){
+
+        boolean retorno = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return retorno;
     }
 
 

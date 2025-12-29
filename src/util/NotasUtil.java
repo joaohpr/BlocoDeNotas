@@ -1,55 +1,42 @@
 package util;
 
-import model.User;
+import model.Notas;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-public final class UserUtil {
+public class NotasUtil {
 
-    public UserUtil() {
 
-    }
+    public static boolean notaIsValid(Notas notaInput){
 
-    public static boolean userIsValid(User userInput) {
+        boolean titleIsValid = false;
+        boolean textIsValid = false;
+        boolean retorno = false;
 
-        boolean userIsNull = false;
-        boolean userNameIsPresent = false;
-        boolean emailIsNull = false;
-        boolean senhaIsValid = false;
-
-        if (userInput == null) {
-            userIsNull = true;
-        } else {
-
-            if (userInput.getUserName() != null) {
-                userNameIsPresent = true;
+        if(notaInput == null){
+            return false;
+        }else {
+            if (notaInput.getTitle().equalsIgnoreCase(null)) {
+                titleIsValid = false;
             }
 
-            if (userNameIsPresent) {
-                if (userInput.getEmailUser() == null) {
-                    emailIsNull = true;
+            if (titleIsValid) {
+                if (notaInput.getNota().equalsIgnoreCase(null)) {
+                    textIsValid = false;
+                } else {
+                    textIsValid = true;
                 }
             }
 
-            if (userNameIsPresent) {
-                if (userInput.getSenhaUser() != 0  && ( userInput.getSenhaUser() >= 100000 && userInput.getSenhaUser() <= 999999)) {
-                    senhaIsValid = true;
-                }
+            if(textIsValid &&  titleIsValid){
+                retorno = true;
+            }else{
+                retorno =  false;
             }
         }
-
-        if (userIsNull) {
-            return true;
-        }
-
-        if (userNameIsPresent && emailIsNull && senhaIsValid) {
-            return true;
-        }
-
-        return false;
-
+        return retorno;
     }
 
     public static int leInteiro() {
@@ -159,5 +146,7 @@ public final class UserUtil {
         return retorno;
 
     }
+
+
 
 }
