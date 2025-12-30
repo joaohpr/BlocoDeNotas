@@ -1,14 +1,19 @@
 package model;
 
+import java.util.Random;
+
 public class Notas {
     private String title;
     private String nota;
     private int id;
 
-    public Notas(String titleInput,String notaInput,int idInput){
-        this.id = idInput;
+
+    Random aleatorio = new Random();
+
+    public Notas(String titleInput,String notaInput){
         this.nota = notaInput;
         this.title = titleInput;
+        this.id =  aleatorio.nextInt(100000);
     }
 
     public Notas(){

@@ -40,7 +40,7 @@ public class UserDAO {
     }
 
 
-    public boolean userExite(User userInput){
+    public boolean userExite(String nome,int senha){
 
         boolean retorno = false;
 
@@ -48,7 +48,7 @@ public class UserDAO {
 
             User userAux = usuarios.getUser(i);
 
-            if(userAux.equals(userInput)){
+            if(userAux.getUserName().equals(nome) && userAux.getSenhaUser() == senha){
                 retorno = true;
                 break;
             }
