@@ -14,40 +14,77 @@ public class NotasServices {
     public final UserDAO userDao = new UserDAO();
     public final UserUtil userUtil = new UserUtil();
 
-    public String criarNota(User userInput, String title, String text){
+    public String criarNota(String userName, int senhaUser, String title, String text) {
 
-        Notas notaAUX = new Notas(title,text);
+        User userAux = userDao.retornaUser(userName, senhaUser);
+        Notas notaAux = new Notas(title, text);
 
-        boolean validN = notasUtil.notaIsValid(notaAUX);
-        boolean validU = userDao.userExite(userInput.getUserName(), userInput.getSenhaUser());
-
-        if(validN && validU){
-            notasDao.criarNota(userInput,title,text);
-            return "Nota criada com sucesso!";
+        if (!userUtil.userIsValid(userAux) || !notasUtil.notaIsValid(notaAux)) {
+            return "Dados inválidos!";
         }
-        return "Há algum erro TENTE NOVAMENTE!";
+
+        notasDao.criarNota(userAux, title, text);
+        return "Nota criada com sucesso!";
     }
 
+    public String excluirNota(String userName, int senhaUser, int idNota) {
 
-    public String excluirNota(User userInput,int idNota){
+        User userAux = userDao.retornaUser(userName, senhaUser);
 
-        boolean existe = userDao.userExite(userInput.getUserName(),userInput.getSenhaUser());
-        boolean validU = userUtil.userIsValid(userInput);
-        Notas notaExcluir;
-
-        if (existe && validU && idNota != 0){
-            notaExcluir = notasDao.buscarNotas(userInput,idNota);
-            notasDao.excluirNota(userInput,idNota);
-
-            return "Nota excluida com sucesso!";
+        if (!userUtil.userIsValid(userAux) || idNota <= 0) {
+            return "Não foi possível excluir a nota!";
         }
-        return "Não foi possivel excluir a nota!";
+
+        Notas nota = notasDao.buscarNotas(userAux, idNota);
+
+        if (nota == null) {
+            return "Nota não encontrada!";
+        }
+
+        notasDao.excluirNota(userAux, idNota);
+        return "Nota excluída com sucesso!";
     }
 
+    public String alterarNota(String userName, int senhaUser, int idNota, String newText) {
 
+        User userAux = userDao.retornaUser(userName, senhaUser);
 
+        if (!userUtil.userIsValid(userAux) || idNota <= 0 || newText == null || newText.isBlank()) {
+            return "Não foi possível alterar a nota!";
+        }
 
+        Notas nota = notasDao.buscarNotas(userAux, idNota);
 
+        if (nota == null) {
+            return "Nota não encontrada!";
+        }
 
+        notasDao.alterarNota(userAux, idNota, newText);
+        return "Nota alterada com sucesso!";
+    }
 
+    public String removerTodasNotas(String userName, int senhaUser) {
+
+        User usuario = userDao.retornaUser(userName, senhaUser);
+
+        if (!userUtil.userIsValid(usuario)) {
+            return "Usuário inválido!";
+        }
+
+        notasDao.removerTodasNotas(usuario);
+        return "Todas as notas foram removidas com sucesso!";
+    }
+
+    public String listarTodasNotas(String userName, int senhaUser) {
+
+        User usuario = userDao.retornaUser(userName, senhaUser);
+
+        if (!userUtil.userIsValid(usuario)) {
+            return "Usuário inválido!";
+        }
+
+        notasDao.allNotes(usuario);
+
+       return "";
+    }
 }

@@ -3,6 +3,8 @@ package dao;
 import bd.BancoDeDadosUser;
 import model.User;
 
+import java.util.ArrayList;
+
 public class UserDAO {
 
     public UserDAO(){
@@ -56,6 +58,24 @@ public class UserDAO {
 
         return retorno;
     }
+
+
+    public User retornaUser(String nome,int senha){
+
+        ArrayList<User> usersAux = new ArrayList<>();
+        usersAux = (ArrayList<User>) usuarios.getUsuarios();
+
+        for(int i = 0;i < usersAux.size();i++){
+            User userOut = usersAux.get(i);
+            if(userOut.getUserName().equals(nome) && userOut.getSenhaUser() ==  senha){
+                return userOut;
+            }
+        }
+        return null;
+    }
+
+
+
 
 
 }
