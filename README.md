@@ -23,7 +23,7 @@ Cada usuário possui:
 
 Tecnologias utilizadas
 
-- Java
+- Java com Maven
 - Git
 - GitHub
 
