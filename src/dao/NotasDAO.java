@@ -13,13 +13,14 @@ public class NotasDAO {
     private final AtomicInteger idGenerator = new AtomicInteger(1);
 
     public boolean criarNota(User usuario, String title, String texto) {
-        int id = idGenerator.getAndIncrement();
-        Notas nota = new Notas(id, title, texto);
+
+
+        Notas nota = new Notas(title,texto);
 
         boolean adicionou = usuario.bancoDeDadosNotasUser.getNotas().add(nota);
 
         if (adicionou) {
-            usuario.bancoDeDadosNotasUser.incrementarIndice();
+            usuario.bancoDeDadosNotasUser.indice++;
         }
 
         return adicionou;
@@ -32,7 +33,7 @@ public class NotasDAO {
         boolean removeu = usuario.bancoDeDadosNotasUser.getNotas().remove(nota);
 
         if (removeu) {
-            usuario.bancoDeDadosNotasUser.decrementarIndice();
+            usuario.bancoDeDadosNotasUser.setIndice(usuario.bancoDeDadosNotasUser.getIndice() - 1);
         }
 
         return removeu;
@@ -56,7 +57,7 @@ public class NotasDAO {
 
     public boolean removerTodasNotas(User usuario) {
         usuario.bancoDeDadosNotasUser.getNotas().clear();
-        usuario.bancoDeDadosNotasUser.resetarIndice();
+        usuario.bancoDeDadosNotasUser.setIndice(0);
         return true;
     }
 
