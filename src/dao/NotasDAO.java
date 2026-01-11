@@ -4,123 +4,88 @@ import bd.BancoDeDadosNotas;
 import model.Notas;
 import model.User;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NotasDAO {
-    public BancoDeDadosNotas bancoNotaDAO = new BancoDeDadosNotas();
 
-    Scanner teclado = new Scanner(System.in);
-    Random aletorio = new Random();
+    private final BancoDeDadosNotas bancoNotaDAO = new BancoDeDadosNotas();
+    private final AtomicInteger idGenerator = new AtomicInteger(1);
 
+    public boolean criarNota(User usuario, String title, String texto) {
+        int id = idGenerator.getAndIncrement();
+        Notas nota = new Notas(id, title, texto);
 
-    public void criarNota(User usuarioInput, String title, String nota) {
+        boolean adicionou = usuario.bancoDeDadosNotasUser.getNotas().add(nota);
 
-
-        int id = aletorio.nextInt(100000);
-
-        usuarioInput.bancoDeDadosNotasUser.notas
-                .add(new Notas(title,nota));
-        usuarioInput.bancoDeDadosNotasUser.setIndice(bancoNotaDAO.getIndice()+1);    }
-
-    public void excluirNota(User usuarioInput, int idDaNota) {
-        for (int i = 0; i < usuarioInput.bancoDeDadosNotasUser.notas.size(); i++) {
-            Notas nota = usuarioInput.bancoDeDadosNotasUser.notas.get(i);
-
-            if (nota.getId() == idDaNota) {
-                usuarioInput.bancoDeDadosNotasUser.notas.remove(i);
-                break;
-            }
+        if (adicionou) {
+            usuario.bancoDeDadosNotasUser.incrementarIndice();
         }
-        usuarioInput.bancoDeDadosNotasUser.setIndice(bancoNotaDAO.getIndice() - 1);
+
+        return adicionou;
     }
 
+    public boolean excluirNota(User usuario, int idNota) {
+        Notas nota = buscarNotas(usuario, idNota);
+        if (nota == null) return false;
 
-    public void alterarNota(User usuarioInput, int idNotaInput,String newTexto) {
+        boolean removeu = usuario.bancoDeDadosNotasUser.getNotas().remove(nota);
 
-
-        for (int i = 0; i < usuarioInput.bancoDeDadosNotasUser.notas.size(); i++) {
-            Notas nota = usuarioInput.bancoDeDadosNotasUser.notas.get(i);
-
-            if (nota.getId() == idNotaInput) {
-
-                usuarioInput.bancoDeDadosNotasUser.notas.get(i).setNota(newTexto);
-                break;
-            }
+        if (removeu) {
+            usuario.bancoDeDadosNotasUser.decrementarIndice();
         }
+
+        return removeu;
     }
 
+    public boolean alterarNota(User usuario, int idNota, String novoTexto) {
+        Notas nota = buscarNotas(usuario, idNota);
+        if (nota == null) return false;
 
-    public void alterarTitulo(User usuarioInput,int idNota) {
-
-
-        for (int i = 0; i < usuarioInput.bancoDeDadosNotasUser.notas.size(); i++) {
-            Notas nota = usuarioInput.bancoDeDadosNotasUser.notas.get(i);
-
-            if (nota.getId() == idNota) {
-                String newTitle = teclado.next();
-                usuarioInput.bancoDeDadosNotasUser.notas.get(i).setTitle(newTitle);
-                break;
-            }
-        }
+        nota.setNota(novoTexto);
+        return true;
     }
 
+    public boolean alterarTitulo(User usuario, int idNota, String novoTitulo) {
+        Notas nota = buscarNotas(usuario, idNota);
+        if (nota == null) return false;
 
-    public void removerTodasNotas(User usuario){
-       for(int i = 0;i < usuario.bancoDeDadosNotasUser.getIndice();i++) {
+        nota.setTitle(novoTitulo);
+        return true;
+    }
 
-           usuario.bancoDeDadosNotasUser.notas.add(i, null);
-       }
+    public boolean removerTodasNotas(User usuario) {
+        usuario.bancoDeDadosNotasUser.getNotas().clear();
+        usuario.bancoDeDadosNotasUser.resetarIndice();
+        return true;
     }
 
     public String allNotes(User usuario) {
+        List<Notas> notas = usuario.bancoDeDadosNotasUser.getNotas();
+
+        if (notas.isEmpty()) {
+            return "Nenhuma nota cadastrada.";
+        }
 
         StringBuilder retorno = new StringBuilder();
-
         retorno.append("===== TODAS AS NOTAS =====\n");
 
-        // for-each para percorrer as notas
-        for (Notas nota : usuario.bancoDeDadosNotasUser.notas) {
-
-            retorno.append("Título: ")
-                    .append(nota.getTitle())
-                    .append("\n");
-
-            retorno.append("Texto:\n")
-                    .append(nota.getNota())
-                    .append("\n");
-
-            retorno.append(" Id : ")
-                    .append(nota.getId())
-                    .append("\n");
-
-            retorno.append("-------------------------\n");
+        for (Notas nota : notas) {
+            retorno.append("ID: ").append(nota.getId()).append("\n")
+                    .append("Título: ").append(nota.getTitle()).append("\n")
+                    .append("Texto:\n").append(nota.getNota()).append("\n")
+                    .append("-------------------------\n");
         }
 
         return retorno.toString();
     }
 
-    public Notas buscarNotas(User userInput,int idNota){
-
-        Notas retorno;
-
-        for(int i = 0;i < userInput.bancoDeDadosNotasUser.notas.size();i++){
-
-            Notas notaAux = userInput.bancoDeDadosNotasUser.notas.get(i);
-
-            if(notaAux.getId() == idNota){
-               retorno = notaAux;
-               return retorno;
+    public Notas buscarNotas(User usuario, int idNota) {
+        for (Notas nota : usuario.bancoDeDadosNotasUser.getNotas()) {
+            if (nota.getId() == idNota) {
+                return nota;
             }
         }
         return null;
     }
-
-
-
 }
-
-
-
-
-

@@ -3,77 +3,63 @@ package dao;
 import bd.BancoDeDadosUser;
 import model.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
-    public UserDAO(){
+    private final BancoDeDadosUser usuarios;
+
+    public UserDAO() {
         this.usuarios = BancoDeDadosUser.getInstancia();
     }
 
-   private final BancoDeDadosUser usuarios;
+    public boolean criarUser(User user) {
+        if (user == null) return false;
+        if (userExiste(user.getUserName(), user.getSenhaUser())) return false;
 
-
-    public void criarUser(User user){
         usuarios.addUser(user);
+        return true;
     }
 
+    public boolean removerUsuario(User user) {
+        if (user == null) return false;
 
-    public void removerUsuario(User userInput){
-        for(int i = 0;i < usuarios.size();i++){
-
-            User userComparar = usuarios.getUser(i);
-
-            if(userComparar.equals( userInput)){
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.getUser(i).equals(user)) {
                 usuarios.removeUser(i);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
+    public boolean mudarNomeUser(User user, String novoNome) {
+        if (user == null || novoNome == null || novoNome.isBlank()) return false;
 
-    public void mudarNomeUser(User user,String nomeSet){
-        user.setUserName(nomeSet);
+        user.setUserName(novoNome);
+        return true;
     }
 
+    public boolean mudarEmailUser(User user, String novoEmail) {
+        if (user == null || novoEmail == null || novoEmail.isBlank()) return false;
 
-    public void mudarEmailUser(User user,String emailSet){
-        user.setEmailUser(emailSet);
+        user.setEmailUser(novoEmail);
+        return true;
     }
 
+    public boolean userExiste(String nome, int senha) {
+        return retornaUser(nome, senha) != null;
+    }
 
-    public boolean userExite(String nome,int senha){
+    public User retornaUser(String nome, int senha) {
+        List<User> lista = usuarios.getUsuarios();
 
-        boolean retorno = false;
-
-        for(int i = 0;i < usuarios.size();i++){
-
-            User userAux = usuarios.getUser(i);
-
-            if(userAux.getUserName().equals(nome) && userAux.getSenhaUser() == senha){
-                retorno = true;
-                break;
+        for (User u : lista) {
+            if (u.getUserName().equals(nome) && u.getSenhaUser() == senha) {
+                return u;
             }
         }
 
-        return retorno;
-    }
-
-
-    public User retornaUser(String nome,int senha){
-
-        ArrayList<User> usersAux = new ArrayList<>();
-        usersAux = (ArrayList<User>) usuarios.getUsuarios();
-
-        for(int i = 0;i < usersAux.size();i++){
-            User userOut = usersAux.get(i);
-            if(userOut.getUserName().equals(nome) && userOut.getSenhaUser() ==  senha){
-                return userOut;
-            }
-        }
         return null;
     }
-
-
-
 }

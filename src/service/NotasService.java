@@ -1,0 +1,70 @@
+package service;
+
+import dao.NotasDAO;
+import dao.UserDAO;
+import model.Notas;
+import model.User;
+import util.NotasUtil;
+import util.UserUtil;
+
+public class NotasService {
+
+    private final NotasDAO notasDao = new NotasDAO();
+    private final UserDAO userDao = new UserDAO();
+    private final NotasUtil notasUtil = new NotasUtil();
+    private final UserUtil userUtil = new UserUtil();
+
+    private User autenticar(String userName, int senhaUser) {
+        User user = userDao.retornaUser(userName, senhaUser);
+        return userUtil.userIsValid(user) ? user : null;
+    }
+
+    public boolean criarNota(String userName, int senhaUser, String title, String text) {
+        User user = autenticar(userName, senhaUser);
+        if (user == null) return false;
+
+        Notas nota = new Notas(title, text);
+        if (!notasUtil.notaIsValid(nota)) return false;
+
+        return notasDao.criarNota(user, title, text);
+    }
+
+    public boolean excluirNota(String userName, int senhaUser, int idNota) {
+        User user = autenticar(userName, senhaUser);
+        if (user == null || idNota <= 0) return false;
+
+        return notasDao.excluirNota(user, idNota);
+    }
+
+    public boolean alterarNota(String userName, int senhaUser, int idNota, String newText) {
+        User user = autenticar(userName, senhaUser);
+        if (user == null || idNota <= 0 || newText == null || newText.isBlank()) {
+            return false;
+        }
+
+        return notasDao.alterarNota(user, idNota, newText);
+    }
+
+    public boolean alterarTitulo(String userName, int senhaUser, int idNota, String newTitle) {
+        User user = autenticar(userName, senhaUser);
+        if (user == null || idNota <= 0 || newTitle == null || newTitle.isBlank()) {
+            return false;
+        }
+
+        return notasDao.alterarTitulo(user, idNota, newTitle);
+    }
+
+    public boolean removerTodasNotas(String userName, int senhaUser) {
+        User user = autenticar(userName, senhaUser);
+        if (user == null) return false;
+
+        return notasDao.removerTodasNotas(user);
+    }
+
+    public String listarTodasNotas(String userName, int senhaUser) {
+        User user = autenticar(userName, senhaUser);
+        if (user == null) return "Usuário inválido!";
+
+        return notasDao.allNotes(user);
+    }
+}

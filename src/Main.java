@@ -1,9 +1,11 @@
+import service.NotasService;
 import service.UserService;
 import java.util.Scanner;
     public class Main {
         public static void main(String[] args) throws InterruptedException {
 
             UserService userService = new UserService();
+            NotasService notasService = new NotasService();
 
             Scanner sc = new Scanner(System.in);
 
@@ -22,7 +24,7 @@ import java.util.Scanner;
                     "3 - Alterar texto da nota\n" +
                     "4 - Remover todas as notas do usuário\n" +
                     "5 - Listar todas as notas do usuário\n" +
-                    "6 - Voltar / Sair\n" +
+                    "6 - Sair\n" +
                     "======================\n";
 
 
@@ -36,6 +38,7 @@ import java.util.Scanner;
                     case 1 -> {
 
                         System.out.println(menuUser);
+                        System.out.print("Entre com o digito da opcao : ");
                         int optionUser = sc.nextInt();
 
 
@@ -54,9 +57,12 @@ import java.util.Scanner;
                                     System.out.print("\nEntre com uma senha de 6 digitos : ");
                                     int senha = sc.nextInt();
 
-                                    userService.criarUser(nome, email, senha);
-                                    break;
-
+                                    if(userService.criarUser(nome, email, senha)){
+                                        System.out.println("Usuario criado com sucesso!");
+                                    }else{
+                                        System.out.println("Não foi possivel criar o usuario!");
+                                    }
+                                    optionUser = 5;
                                 }
 
                                 case 2 -> {
@@ -71,8 +77,13 @@ import java.util.Scanner;
                                     System.out.print("\nEntre com sua senha : ");
                                     int senhaRemove = sc.nextInt();
 
-                                    userService.removerUser(nomeRemove, senhaRemove);
-                                    break;
+                                    if(userService.removerUser(nomeRemove, senhaRemove)){
+                                        System.out.println("O usuario foi removido!");
+                                    }else{
+                                        System.out.println("Não foi possivel remover o usuario!");
+                                    }
+                                    optionUser = 5;
+
 
                                 }
 
@@ -91,8 +102,12 @@ import java.util.Scanner;
                                     System.out.print("\nConfirme sua senha para alterar : ");
                                     int senha = sc.nextInt();
 
-                                    userService.mudarNome(nomeNow, nomeSet, senha);
-                                    break;
+                                    if(userService.mudarNome(nomeNow, nomeSet, senha)){
+                                        System.out.println("Seu nome foi alterado com sucesso!");
+                                    }else{
+                                        System.out.println("Não foi possivel alterar o seu nome!");
+                                    }
+                                    optionUser = 5;
 
                                 }
 
@@ -108,8 +123,13 @@ import java.util.Scanner;
                                     System.out.print("\nEntre com o email que ira substituir o atual :");
                                     String emailSet = sc.next();
 
-                                    userService.mudarEmail(nome, senha, emailSet);
-                                    break;
+                                    if(userService.mudarEmail(nome, senha, emailSet)){
+                                        System.out.println("Email alterado com sucesso!");
+                                    }else{
+                                        System.out.println("Não foi possivel alterar o email!");
+                                    }
+                                    optionUser = 5;
+
 
                                 }
 
@@ -122,7 +142,8 @@ import java.util.Scanner;
                                     }
                                     System.out.println("");
 
-                                    break;
+                                    optionUser = 5;
+
                                 }
 
                                 default -> {
@@ -133,11 +154,150 @@ import java.util.Scanner;
 
                         } while (optionUser != 5);
 
-
                     }
 
 
                     case 2 -> {
+
+
+                        System.out.println(menuNotes);
+                        System.out.println("Entre com o digito da opcao :");
+                        int optionNote = sc.nextInt();
+
+                        do{
+
+                            switch (optionNote){
+
+                                case 1 ->{
+                                    System.out.println("==== CRIAR NOTA ====");
+
+                                    System.out.print("Entre com seu nome : ");
+                                    String nome = sc.next();
+
+                                    System.out.print("\nEntre com sua senha : ");
+                                    int senha = sc.nextInt();
+
+                                    System.out.print("\nEntre com o Titulo da nota : ");
+                                    String title = sc.next();
+
+                                    System.out.print("\nEscreva o texto : ");
+                                    String text = sc.next();
+
+                                    if(notasService.criarNota(nome,senha,title,text)) {
+                                        System.out.println("Nota criada com sucesso!");
+                                    } else {
+                                        System.out.println("ERRO!Não foi possivel criar a nota!");
+                                    }
+                                    optionNote = 6;
+
+                                }
+
+
+                                case 2 ->{
+                                    System.out.println("==== EXCLUIR NOTA ====");
+
+                                    System.out.print("\nEntre com seu nome : ");
+                                    String nome = sc.next();
+
+                                    System.out.print("\nEntre com sua senha : ");
+                                    int senha = sc.nextInt();
+
+                                    System.out.print("\nID da nota : ");
+                                    int idNota = sc.nextInt();
+
+                                    if(notasService.excluirNota(nome,senha,idNota)){
+                                        System.out.println("Nota excluida com sucesso!");
+                                    } else {
+                                        System.out.println("ERRO!Não foi possivel excluir a nota!");
+                                    }
+                                    optionNote = 6;
+
+                                }
+
+
+                                case 3 ->{
+                                    System.out.println("==== ALTERAR TEXTO DA NOTA ====");
+
+                                    System.out.print("\nEntre com seu nome :");
+                                    String nome = sc.next();
+
+                                    System.out.print("\nEntre com sua senha : ");
+                                    int senha = sc.nextInt();
+
+                                    System.out.print("\nID da nota : ");
+                                    int idNota = sc.nextInt();
+
+                                    System.out.print("\nEscreva o novo texto : ");
+                                    String newText = sc.next();
+
+                                    if(notasService.alterarNota(nome,senha,idNota,newText)){
+                                        System.out.println("A nota foi alterada!");
+                                    } else {
+                                        System.out.println("ERRO!Não foi possivel alterar o texto!");
+                                    }
+                                    optionNote = 6;
+
+                                }
+
+
+                                case 4 ->{
+                                    System.out.println("==== REMOVER TODAS AS NOTAS ====");
+
+                                    System.out.print("\nEntre com seu nome : ");
+                                    String nome = sc.next();
+
+                                    System.out.print("\nEntre com sua senha : ");
+                                    int senha = sc.nextInt();
+
+                                    if(notasService.removerTodasNotas(nome,senha)){
+
+                                        System.out.println("Todas as notas foram excluidas");
+                                    } else {
+                                        System.out.println("ERRO!Não foi possivel excluir a notas!");
+                                    }
+                                    optionNote = 6;
+
+                                }
+
+
+                                case 5 ->{
+                                    System.out.println("==== EXCLUINDO TODAS AS NOTAS ====");
+
+                                    System.out.print("Entre com seu nome : ");
+                                    String nome = sc.next();
+
+                                    System.out.print("\nEntre com sua senha : ");
+                                    int senha = sc.nextInt();
+
+                                    if(notasService.removerTodasNotas(nome,senha)){
+                                        System.out.println("Todas as notas foram excluidas!");
+                                    } else {
+                                        System.out.println("ERRO!Não foi possivel excluir as notas!");
+                                    }
+                                    optionNote = 6;
+
+                                }
+
+
+                                case 6 ->{
+                                    System.out.print("Saindo");
+                                    String point = ".";
+                                    for (int i = 0; i < 3; i++) {
+                                        Thread.sleep(1000);
+                                        System.out.print(point);
+                                    }
+                                    System.out.println("");
+                                    optionNote = 6;
+
+                                }
+
+                                default -> {
+                                    System.out.println("Opção inválida!");
+                                }
+
+                            }
+
+                        }while(optionNote != 6);
 
                     }
 
@@ -157,12 +317,10 @@ import java.util.Scanner;
                         System.out.println("Opção inválida!");
                     }
 
-
                 }
-
-
 
             }while (optionMain != 3) ;
 
         }
+
     }
