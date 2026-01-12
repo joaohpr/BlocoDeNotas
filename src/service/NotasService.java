@@ -4,17 +4,17 @@ import dao.NotasDAO;
 import dao.UserDAO;
 import model.Notas;
 import model.User;
+import util.Util;
 
 public class NotasService {
 
     private final NotasDAO notasDao = new NotasDAO();
     private final UserDAO userDao = new UserDAO();
-    private final NotasUtil notasUtil = new NotasUtil();
-    private final UserUtil userUtil = new UserUtil();
+    private final Util util = new Util();
 
     private User autenticar(String userName, int senhaUser) {
         User user = userDao.retornaUser(userName, senhaUser);
-        return userUtil.userIsValid(user) ? user : null;
+        return util.userIsValid(user) ? user : null;
     }
 
     public boolean criarNota(String userName, int senhaUser, String title, String text) {
@@ -22,7 +22,7 @@ public class NotasService {
         if (user == null) return false;
 
         Notas nota = new Notas(title, text);
-        if (!notasUtil.notaIsValid(nota)) return false;
+        if (!util.notaIsValid(nota)) return false;
 
         return notasDao.criarNota(user, title, text);
     }

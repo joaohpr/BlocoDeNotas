@@ -2,21 +2,22 @@ package service;
 
 import dao.UserDAO;
 import model.User;
+import util.Util;
 
 public class UserService {
 
     private final UserDAO userDao = new UserDAO();
-    private final UserUtil userUtil = new UserUtil();
+    private final Util util = new Util();
 
     private User autenticar(String userName, int senha) {
         User user = userDao.retornaUser(userName, senha);
-        return userUtil.userIsValid(user) ? user : null;
+        return util.userIsValid(user) ? user : null;
     }
 
     public boolean criarUser(String userName, String emailUser, int senhaUser) {
         User user = new User(userName, emailUser, senhaUser);
 
-        if (!userUtil.userIsValid(user)) {
+        if (!util.userIsValid(user)) {
             return false;
         }
 

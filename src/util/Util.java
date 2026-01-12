@@ -1,9 +1,13 @@
 package util;
 
+import model.Notas;
+import model.User;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Supplier;
+
 
 public class Util {
 
@@ -51,4 +55,53 @@ public class Util {
             return null;
         }
     }
+
+    public static boolean userIsValid(User userInput) {
+
+        boolean userIsNull = false;
+        boolean userNameIsPresent = false;
+        boolean emailIsNull = false;
+        boolean senhaIsValid = false;
+
+        if (userInput == null) {
+            userIsNull = true;
+        } else {
+
+            if (userInput.getUserName() != null) {
+                userNameIsPresent = true;
+            }
+
+            if (userNameIsPresent) {
+                if (userInput.getEmailUser() == null) {
+                    emailIsNull = true;
+                }
+            }
+
+            if (userNameIsPresent) {
+                if (userInput.getSenhaUser() != 0  && ( userInput.getSenhaUser() >= 100000 && userInput.getSenhaUser() <= 999999)) {
+                    senhaIsValid = true;
+                }
+            }
+        }
+
+        if (userIsNull) {
+            return true;
+        }
+
+        if (userNameIsPresent && emailIsNull && senhaIsValid) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+
+    public static boolean notaIsValid(Notas nota) {
+        if (nota == null) return false;
+
+        return nota.getTitle() != null
+                && nota.getNota() != null;
+    }
+
 }

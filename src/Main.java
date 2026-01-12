@@ -3,7 +3,6 @@ import service.NotasService;
 import service.UserService;
 import util.Util;
 
-import java.util.Scanner;
 
     public class Main {
 
@@ -13,8 +12,6 @@ import java.util.Scanner;
             NotasService notasService = new NotasService();
             Util util = new Util();
 
-
-            Scanner sc = new Scanner(System.in);
 
             int optionMain;
             String menuMain = "1)Usuario\n2)Notas\n3)Sair\n";
