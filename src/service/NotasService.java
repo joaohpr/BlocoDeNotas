@@ -4,8 +4,6 @@ import dao.NotasDAO;
 import dao.UserDAO;
 import model.Notas;
 import model.User;
-import util.NotasUtil;
-import util.UserUtil;
 
 public class NotasService {
 

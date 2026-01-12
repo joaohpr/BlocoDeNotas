@@ -1,16 +1,24 @@
 import service.NotasService;
+
 import service.UserService;
+import util.Util;
+
 import java.util.Scanner;
+
     public class Main {
+
         public static void main(String[] args) throws InterruptedException {
 
             UserService userService = new UserService();
             NotasService notasService = new NotasService();
+            Util util = new Util();
+
 
             Scanner sc = new Scanner(System.in);
 
             int optionMain;
             String menuMain = "1)Usuario\n2)Notas\n3)Sair\n";
+
             String menuUser = "\n===== MENU USUÁRIO =====\n" +
                     "1 - Criar usuário\n" +
                     "2 - Remover usuário\n" +
@@ -18,6 +26,7 @@ import java.util.Scanner;
                     "4 - Alterar email do usuário\n" +
                     "5 - Sair\n" +
                     "========================\n";
+
             String menuNotes = "\n===== MENU NOTAS =====\n" +
                     "1 - Criar nota\n" +
                     "2 - Excluir nota por ID\n" +
@@ -32,14 +41,14 @@ import java.util.Scanner;
                 System.out.println(menuMain);
 
                 System.out.print("Entre com o dígito da opção : ");
-                optionMain = sc.nextInt();
+                optionMain = util.leInteiro();
 
                 switch (optionMain) {
                     case 1 -> {
 
                         System.out.println(menuUser);
                         System.out.print("Entre com o digito da opcao : ");
-                        int optionUser = sc.nextInt();
+                        int optionUser = util.leInteiro();
 
 
                         do {
@@ -49,13 +58,13 @@ import java.util.Scanner;
                                     System.out.println("==== CRIANDO USUARIO ====");
 
                                     System.out.print("Entre com seu nome : ");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\nEntre com seu email : ");
-                                    String email = sc.next();
+                                    String email = util.leString();
 
                                     System.out.print("\nEntre com uma senha de 6 digitos : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     if(userService.criarUser(nome, email, senha)){
                                         System.out.println("Usuario criado com sucesso!");
@@ -69,13 +78,13 @@ import java.util.Scanner;
                                     System.out.println("==== REMOVENDO USUARIO ====");
 
                                     System.out.print("Informe seu nome : ");
-                                    String nomeRemove = sc.next();
+                                    String nomeRemove = util.leString();
 
                                     System.out.print("\nEntre com seu email : ");
-                                    String emailRemove = sc.next();
+                                    String emailRemove = util.leString();
 
                                     System.out.print("\nEntre com sua senha : ");
-                                    int senhaRemove = sc.nextInt();
+                                    int senhaRemove = util.leInteiro();
 
                                     if(userService.removerUser(nomeRemove, senhaRemove)){
                                         System.out.println("O usuario foi removido!");
@@ -91,16 +100,16 @@ import java.util.Scanner;
                                     System.out.println("==== ALTERAR NOME ====");
 
                                     System.out.print("Entre com seu nome atual : ");
-                                    String nomeNow = sc.next();
+                                    String nomeNow = util.leString();
 
                                     System.out.print("\nEntre com o nome que vai substituir o atual : ");
-                                    String nomeSet = sc.next();
+                                    String nomeSet = util.leString();
 
                                     System.out.print("\n Entre com seu email : ");
-                                    String email = sc.next();
+                                    String email = util.leString();
 
                                     System.out.print("\nConfirme sua senha para alterar : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     if(userService.mudarNome(nomeNow, nomeSet, senha)){
                                         System.out.println("Seu nome foi alterado com sucesso!");
@@ -115,13 +124,13 @@ import java.util.Scanner;
                                     System.out.println("==== ALTERAR EMAIL ====");
 
                                     System.out.print("Entre com seu nome :");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\n Confirme sua senha :");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     System.out.print("\nEntre com o email que ira substituir o atual :");
-                                    String emailSet = sc.next();
+                                    String emailSet = util.leString();
 
                                     if(userService.mudarEmail(nome, senha, emailSet)){
                                         System.out.println("Email alterado com sucesso!");
@@ -162,7 +171,7 @@ import java.util.Scanner;
 
                         System.out.println(menuNotes);
                         System.out.println("Entre com o digito da opcao :");
-                        int optionNote = sc.nextInt();
+                        int optionNote = util.leInteiro();
 
                         do{
 
@@ -172,19 +181,19 @@ import java.util.Scanner;
                                     System.out.println("==== CRIAR NOTA ====");
 
                                     System.out.print("Entre com seu nome : ");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\nEntre com sua senha : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     System.out.print("\nEntre com o Titulo da nota : ");
-                                    String title = sc.next();
+                                    String title = util.leString();
 
                                     System.out.print("\nEscreva o texto : ");
-                                    String text = sc.next();
-
+                                    String text = util.leString();
                                     if(notasService.criarNota(nome,senha,title,text)) {
                                         System.out.println("Nota criada com sucesso!");
+
                                     } else {
                                         System.out.println("ERRO!Não foi possivel criar a nota!");
                                     }
@@ -197,13 +206,13 @@ import java.util.Scanner;
                                     System.out.println("==== EXCLUIR NOTA ====");
 
                                     System.out.print("\nEntre com seu nome : ");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\nEntre com sua senha : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     System.out.print("\nID da nota : ");
-                                    int idNota = sc.nextInt();
+                                    int idNota = util.leInteiro();
 
                                     if(notasService.excluirNota(nome,senha,idNota)){
                                         System.out.println("Nota excluida com sucesso!");
@@ -219,16 +228,16 @@ import java.util.Scanner;
                                     System.out.println("==== ALTERAR TEXTO DA NOTA ====");
 
                                     System.out.print("\nEntre com seu nome :");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\nEntre com sua senha : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     System.out.print("\nID da nota : ");
-                                    int idNota = sc.nextInt();
+                                    int idNota = util.leInteiro();
 
                                     System.out.print("\nEscreva o novo texto : ");
-                                    String newText = sc.next();
+                                    String newText = util.leString();
 
                                     if(notasService.alterarNota(nome,senha,idNota,newText)){
                                         System.out.println("A nota foi alterada!");
@@ -244,10 +253,10 @@ import java.util.Scanner;
                                     System.out.println("==== REMOVER TODAS AS NOTAS ====");
 
                                     System.out.print("\nEntre com seu nome : ");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\nEntre com sua senha : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     if(notasService.removerTodasNotas(nome,senha)){
 
@@ -264,10 +273,10 @@ import java.util.Scanner;
                                     System.out.println("==== EXCLUINDO TODAS AS NOTAS ====");
 
                                     System.out.print("Entre com seu nome : ");
-                                    String nome = sc.next();
+                                    String nome = util.leString();
 
                                     System.out.print("\nEntre com sua senha : ");
-                                    int senha = sc.nextInt();
+                                    int senha = util.leInteiro();
 
                                     if(notasService.removerTodasNotas(nome,senha)){
                                         System.out.println("Todas as notas foram excluidas!");

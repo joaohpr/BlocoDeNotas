@@ -16,6 +16,7 @@ public class User {
        bancoDeDadosNotasUser = new BancoDeDadosNotas();
    }
 
+
    public User(){
 
    }
@@ -24,6 +25,7 @@ public class User {
    public String getUserName(){
        return this.userName;
    }
+
 
    public void setUserName(String nameInput){
        this.userName = nameInput;
@@ -34,14 +36,15 @@ public class User {
        return this.emailUser;
    }
 
-   public void setEmailUser(String emailInput){
-       this.emailUser = emailInput;
+   public void setEmailUser(String emailUserInput){
+       this.emailUser = emailUserInput;
    }
 
 
    public int getSenhaUser(){
        return this.senhaUser;
    }
+
 
    public void setSenhaUser(int senhaInput){
        this.senhaUser = senhaInput;
@@ -52,6 +55,5 @@ public class User {
    public String toString(){
       return " User \n Name : "+this.userName + " \n Email : "+this.emailUser+"\n Senha : "+this.senhaUser;
    }
-
 
 }

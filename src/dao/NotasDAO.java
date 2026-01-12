@@ -5,17 +5,19 @@ import model.Notas;
 import model.User;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Random;
+
 
 public class NotasDAO {
 
     private final BancoDeDadosNotas bancoNotaDAO = new BancoDeDadosNotas();
-    private final AtomicInteger idGenerator = new AtomicInteger(1);
+    private final Random random = new Random();
 
     public boolean criarNota(User usuario, String title, String texto) {
 
 
         Notas nota = new Notas(title,texto);
+        nota.setId(random.nextInt(100000));
 
         boolean adicionou = usuario.bancoDeDadosNotasUser.getNotas().add(nota);
 
