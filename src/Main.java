@@ -3,18 +3,21 @@ import service.NotasService;
 import service.UserService;
 import util.Util;
 
+import java.util.Scanner;
 
-    public class Main {
+
+public class Main {
 
         public static void main(String[] args) throws InterruptedException {
 
-            UserService userService = new UserService();
-            NotasService notasService = new NotasService();
-            Util util = new Util();
+            final UserService userService = new UserService();
+            final NotasService notasService = new NotasService();
+            final Util util = new Util();
+            final Scanner sc =  new Scanner(System.in);
 
 
             int optionMain;
-            String menuMain = "1)Usuario\n2)Notas\n3)Sair\n";
+            String menuMain = "\n1)Usuario\n2)Notas\n3)Sair\n";
 
             String menuUser = "\n===== MENU USUÁRIO =====\n" +
                     "1 - Criar usuário\n" +
@@ -55,7 +58,7 @@ import util.Util;
                                     System.out.println("==== CRIANDO USUARIO ====");
 
                                     System.out.print("Entre com seu nome : ");
-                                    String nome = util.leString();
+                                    String nome = sc.next();
 
                                     System.out.print("\nEntre com seu email : ");
                                     String email = util.leString();
@@ -275,10 +278,10 @@ import util.Util;
                                     System.out.print("\nEntre com sua senha : ");
                                     int senha = util.leInteiro();
 
-                                    if(notasService.removerTodasNotas(nome,senha)){
-                                        System.out.println("Todas as notas foram excluidas!");
+                                    if(Boolean.parseBoolean(notasService.listarTodasNotas(nome,senha))){
+                                        System.out.println("Essas sao todas as notas !");
                                     } else {
-                                        System.out.println("ERRO!Não foi possivel excluir as notas!");
+                                        System.out.println("ERRO!Não foi possivel listar as notas!");
                                     }
                                     optionNote = 6;
 
