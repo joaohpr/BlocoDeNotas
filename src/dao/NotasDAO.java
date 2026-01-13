@@ -67,7 +67,7 @@ public class NotasDAO {
         List<Notas> notas = usuario.bancoDeDadosNotasUser.getNotas();
 
         if (notas.isEmpty()) {
-            return "Nenhuma nota cadastrada.";
+            return null;
         }
 
         StringBuilder retorno = new StringBuilder();

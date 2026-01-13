@@ -61,7 +61,7 @@ public class NotasService {
 
     public String listarTodasNotas(String userName, int senhaUser) {
         User user = autenticar(userName, senhaUser);
-        if (user == null) return "Usuário inválido!";
+        if (user == null) return null;
 
         return notasDao.allNotes(user);
     }

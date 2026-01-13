@@ -80,9 +80,6 @@ public class Main {
                                     System.out.print("Informe seu nome : ");
                                     String nomeRemove = util.leString();
 
-                                    System.out.print("\nEntre com seu email : ");
-                                    String emailRemove = util.leString();
-
                                     System.out.print("\nEntre com sua senha : ");
                                     int senhaRemove = util.leInteiro();
 
@@ -270,7 +267,7 @@ public class Main {
 
 
                                 case 5 ->{
-                                    System.out.println("==== EXCLUINDO TODAS AS NOTAS ====");
+                                    System.out.println("==== LISTAR TODAS AS NOTAS ====");
 
                                     System.out.print("Entre com seu nome : ");
                                     String nome = util.leString();
@@ -278,8 +275,9 @@ public class Main {
                                     System.out.print("\nEntre com sua senha : ");
                                     int senha = util.leInteiro();
 
-                                    if(Boolean.parseBoolean(notasService.listarTodasNotas(nome,senha))){
+                                    if(notasService.listarTodasNotas(nome,senha) != null){
                                         System.out.println("Essas sao todas as notas !");
+                                        System.out.println( notasService.listarTodasNotas(nome,senha));
                                     } else {
                                         System.out.println("ERRO!Não foi possivel listar as notas!");
                                     }
