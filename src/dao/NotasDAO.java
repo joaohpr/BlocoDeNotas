@@ -4,20 +4,20 @@ import bd.BancoDeDadosNotas;
 import model.Notas;
 import model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
 public class NotasDAO {
 
-    private final BancoDeDadosNotas bancoNotaDAO = new BancoDeDadosNotas();
     private final Random random = new Random();
 
     public boolean criarNota(User usuario, String title, String texto) {
 
 
         Notas nota = new Notas(title,texto);
-        nota.setId(random.nextInt(100000));
+        nota.setId(random.nextInt(1000000));
 
         boolean adicionou = usuario.bancoDeDadosNotasUser.getNotas().add(nota);
 
@@ -63,24 +63,9 @@ public class NotasDAO {
         return true;
     }
 
-    public String allNotes(User usuario) {
-        List<Notas> notas = usuario.bancoDeDadosNotasUser.getNotas();
+    public ArrayList<Notas> allNotes(User usuario) {
 
-        if (notas.isEmpty()) {
-            return null;
-        }
-
-        StringBuilder retorno = new StringBuilder();
-        retorno.append("===== TODAS AS NOTAS =====\n");
-
-        for (Notas nota : notas) {
-            retorno.append("ID: ").append(nota.getId()).append("\n")
-                    .append("Título: ").append(nota.getTitle()).append("\n")
-                    .append("Texto:\n").append(nota.getNota()).append("\n")
-                    .append("-------------------------\n");
-        }
-
-        return retorno.toString();
+       return usuario.bancoDeDadosNotasUser.getNotas();
     }
 
     public Notas buscarNotas(User usuario, int idNota) {

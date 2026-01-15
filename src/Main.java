@@ -279,7 +279,7 @@ public class Main {
                                         System.out.println("Essas sao todas as notas !");
                                         System.out.println( notasService.listarTodasNotas(nome,senha));
                                     } else {
-                                        System.out.println("ERRO!Não foi possivel listar as notas!");
+                                        System.out.println("Você não tem nenhuma nota criada!" );
                                     }
                                     optionNote = 6;
 

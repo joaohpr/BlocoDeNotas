@@ -6,6 +6,8 @@ import model.Notas;
 import model.User;
 import util.Util;
 
+import java.util.List;
+
 public class NotasService {
 
     private final NotasDAO notasDao = new NotasDAO();
@@ -63,6 +65,21 @@ public class NotasService {
         User user = autenticar(userName, senhaUser);
         if (user == null) return null;
 
-        return notasDao.allNotes(user);
+        List<Notas> notas = user.bancoDeDadosNotasUser.getNotas();
+        if (notas.isEmpty()) return null;
+
+        StringBuilder retorno = new StringBuilder();
+        retorno.append("===== TODAS AS NOTAS =====\n\n");
+
+        for (Notas nota : notas) {
+            retorno.append("ID: ").append(nota.getId()).append("\n")
+                    .append("Título: ").append(nota.getTitle()).append("\n")
+                    .append("Texto:\n")
+                    .append(nota.getNota()).append("\n\n")
+                    .append("-------------------------\n\n");
+        }
+
+        return retorno.toString();
     }
+
 }
