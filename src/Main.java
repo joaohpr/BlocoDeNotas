@@ -1,8 +1,10 @@
+import model.Notas;
 import service.NotasService;
 
 import service.UserService;
 import util.Util;
 
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -277,7 +279,22 @@ public class Main {
 
                                     if(notasService.listarTodasNotas(nome,senha) != null){
                                         System.out.println("Essas sao todas as notas !");
-                                        System.out.println( notasService.listarTodasNotas(nome,senha));
+
+                                        List<Notas> notas =  notasService.listarTodasNotas(nome,senha);
+
+                                        StringBuilder retorno = new StringBuilder();
+                                        retorno.append("===== TODAS AS NOTAS =====\n\n");
+
+                                        for (Notas nota : notas) {
+                                            retorno.append("ID: ").append(nota.getId()).append("\n")
+                                                    .append("Título: ").append(nota.getTitle()).append("\n")
+                                                    .append("Texto:\n")
+                                                    .append(nota.getNota()).append("\n\n")
+                                                    .append("-------------------------\n\n");
+                                        }
+
+                                        System.out.println(retorno.toString());
+
                                     } else {
                                         System.out.println("Você não tem nenhuma nota criada!" );
                                     }

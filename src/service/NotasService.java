@@ -61,25 +61,14 @@ public class NotasService {
         return notasDao.removerTodasNotas(user);
     }
 
-    public String listarTodasNotas(String userName, int senhaUser) {
+    public  List<Notas> listarTodasNotas(String userName, int senhaUser) {
         User user = autenticar(userName, senhaUser);
         if (user == null) return null;
 
         List<Notas> notas = user.bancoDeDadosNotasUser.getNotas();
         if (notas.isEmpty()) return null;
 
-        StringBuilder retorno = new StringBuilder();
-        retorno.append("===== TODAS AS NOTAS =====\n\n");
-
-        for (Notas nota : notas) {
-            retorno.append("ID: ").append(nota.getId()).append("\n")
-                    .append("Título: ").append(nota.getTitle()).append("\n")
-                    .append("Texto:\n")
-                    .append(nota.getNota()).append("\n\n")
-                    .append("-------------------------\n\n");
-        }
-
-        return retorno.toString();
+        return notas;
     }
 
 }
