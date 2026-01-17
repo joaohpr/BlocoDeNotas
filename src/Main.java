@@ -142,13 +142,24 @@ public class Main {
                                 }
 
                                 case 5 -> {
-                                    System.out.print("Saindo");
-                                    String point = ".";
-                                    for (int i = 0; i < 3; i++) {
+                                    String[] saindo = new String[6];
+                                    saindo[0] = "S";
+                                    saindo[1] = "a";
+                                    saindo[2] = "i";
+                                    saindo[3] = "n";
+                                    saindo[4] = "d";
+                                    saindo[5] = "o";
+
+                                    for (int i = 0; i < saindo.length; i++) {
+                                        System.out.print(saindo[i]);
                                         Thread.sleep(1000);
-                                        System.out.print(point);
                                     }
-                                    System.out.println("");
+
+                                    String point = ".";
+                                    for (int u = 0; u < 3; u++) {
+                                        System.out.print(point);
+                                        Thread.sleep(1000);
+                                    }
 
                                     optionUser = 5;
 
@@ -304,13 +315,24 @@ public class Main {
 
 
                                 case 6 ->{
-                                    System.out.print("Saindo");
-                                    String point = ".";
-                                    for (int i = 0; i < 3; i++) {
+                                    String[] saindo = new String[6];
+                                    saindo[0] = "S";
+                                    saindo[1] = "a";
+                                    saindo[2] = "i";
+                                    saindo[3] = "n";
+                                    saindo[4] = "d";
+                                    saindo[5] = "o";
+
+                                    for (int i = 0; i < saindo.length; i++) {
+                                        System.out.print(saindo[i]);
                                         Thread.sleep(1000);
-                                        System.out.print(point);
                                     }
-                                    System.out.println("");
+
+                                    String point = ".";
+                                    for (int u = 0; u < 3; u++) {
+                                        System.out.print(point);
+                                        Thread.sleep(1000);
+                                    }
                                     optionNote = 6;
 
                                 }
@@ -327,14 +349,24 @@ public class Main {
 
 
                     case 3 -> {
-                        System.out.print("Saindo");
-                        String point = ".";
-                        for (int i = 0; i < 3; i++) {
-                            Thread.sleep(1000);
-                            System.out.print(point);
-                        }
-                        System.out.println("");
+                        String[] saindo = new String[6];
+                        saindo[0] = "S";
+                        saindo[1] = "a";
+                        saindo[2] = "i";
+                        saindo[3] = "n";
+                        saindo[4] = "d";
+                        saindo[5] = "o";
 
+                        for (int i = 0; i < saindo.length; i++) {
+                            System.out.print(saindo[i]);
+                            Thread.sleep(1000);
+                        }
+
+                        String point = ".";
+                        for (int u = 0; u < 3; u++) {
+                            System.out.print(point);
+                            Thread.sleep(1000);
+                        }
                     }
 
                     default ->{
