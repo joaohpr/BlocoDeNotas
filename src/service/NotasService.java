@@ -19,9 +19,12 @@ public class NotasService {
         return util.userIsValid(user) ? user : null;
     }
 
-    public boolean criarNota(String userName, int senhaUser, String title, String text) {
-        User user = autenticar(userName, senhaUser);
-        if (user == null) return false;
+    private boolean usuarioValido(User user) {
+        return util.userIsValid(user);
+    }
+
+    public boolean criarNota(User user, String title, String text) {
+        if (!usuarioValido(user)) return false;
 
         Notas nota = new Notas(title, text);
         if (!util.notaIsValid(nota)) return false;
@@ -29,46 +32,64 @@ public class NotasService {
         return notasDao.criarNota(user, title, text);
     }
 
+    public boolean criarNota(String userName, int senhaUser, String title, String text) {
+        User user = autenticar(userName, senhaUser);
+        return criarNota(user, title, text);
+    }
+
+    public boolean excluirNota(User user, int idNota) {
+        if (!usuarioValido(user) || idNota <= 0) return false;
+        return notasDao.excluirNota(user, idNota);
+    }
+
     public boolean excluirNota(String userName, int senhaUser, int idNota) {
         User user = autenticar(userName, senhaUser);
-        if (user == null || idNota <= 0) return false;
+        return excluirNota(user, idNota);
+    }
 
-        return notasDao.excluirNota(user, idNota);
+    public boolean alterarNota(User user, int idNota, String newText) {
+        if (!usuarioValido(user) || idNota <= 0 || newText == null || newText.isBlank()) {
+            return false;
+        }
+        return notasDao.alterarNota(user, idNota, newText);
     }
 
     public boolean alterarNota(String userName, int senhaUser, int idNota, String newText) {
         User user = autenticar(userName, senhaUser);
-        if (user == null || idNota <= 0 || newText == null || newText.isBlank()) {
+        return alterarNota(user, idNota, newText);
+    }
+
+    public boolean alterarTitulo(User user, int idNota, String newTitle) {
+        if (!usuarioValido(user) || idNota <= 0 || newTitle == null || newTitle.isBlank()) {
             return false;
         }
-
-        return notasDao.alterarNota(user, idNota, newText);
+        return notasDao.alterarTitulo(user, idNota, newTitle);
     }
 
     public boolean alterarTitulo(String userName, int senhaUser, int idNota, String newTitle) {
         User user = autenticar(userName, senhaUser);
-        if (user == null || idNota <= 0 || newTitle == null || newTitle.isBlank()) {
-            return false;
-        }
+        return alterarTitulo(user, idNota, newTitle);
+    }
 
-        return notasDao.alterarTitulo(user, idNota, newTitle);
+    public boolean removerTodasNotas(User user) {
+        if (!usuarioValido(user)) return false;
+        return notasDao.removerTodasNotas(user);
     }
 
     public boolean removerTodasNotas(String userName, int senhaUser) {
         User user = autenticar(userName, senhaUser);
-        if (user == null) return false;
-
-        return notasDao.removerTodasNotas(user);
+        return removerTodasNotas(user);
     }
 
-    public  List<Notas> listarTodasNotas(String userName, int senhaUser) {
-        User user = autenticar(userName, senhaUser);
-        if (user == null) return null;
+    public List<Notas> listarTodasNotas(User user) {
+        if (!usuarioValido(user)) return null;
 
         List<Notas> notas = user.bancoDeDadosNotasUser.getNotas();
-        if (notas.isEmpty()) return null;
-
-        return notas;
+        return notas.isEmpty() ? null : notas;
     }
 
+    public List<Notas> listarTodasNotas(String userName, int senhaUser) {
+        User user = autenticar(userName, senhaUser);
+        return listarTodasNotas(user);
+    }
 }

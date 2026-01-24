@@ -23,15 +23,15 @@ public class Util {
         }
     }
 
-    public static int leInteiro() {
+    public static int intInput() {
         return lerComTratamento(() -> {
             int v = SC.nextInt();
-            SC.nextLine(); // consome o \n deixado pelo Enter
+            SC.nextLine();
             return v;
         });
     }
 
-    public static float leFloat() {
+    public static float floatInput() {
         return lerComTratamento(() -> {
             float v = SC.nextFloat();
             SC.nextLine(); // consome o \n
@@ -39,11 +39,11 @@ public class Util {
         });
     }
 
-    public static String leString() {
+    public static String stringInput() {
         return lerComTratamento(SC::nextLine);
     }
 
-    public static char leChar() {
+    public static char charInput() {
         return lerComTratamento(() -> SC.next().charAt(0));
     }
 
