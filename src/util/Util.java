@@ -67,10 +67,24 @@ public class Util {
     public static boolean userIsValid(User user) {
         if (user == null) return false;
 
-        return user.getUserName()  != null && !user.getUserName().isBlank()
-                && user.getEmailUser() != null && !user.getEmailUser().isBlank();
+        String nome = user.getUserName();
+        String email = user.getEmailUser();
+        int senha = user.getSenhaUser();
+
+        if (nome == null || nome.isBlank()) return false;
+        if (email == null || email.isBlank()) return false;
+
+        boolean isValidEmail = false;
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == '@') {
+                isValidEmail = true;
+                break;
+            }
+        }
+
+        boolean senhaValida = senha >= 100000 && senha <= 999999;
+
+        return isValidEmail && senhaValida;
     }
-
-
 
 }
