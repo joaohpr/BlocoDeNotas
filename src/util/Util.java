@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
+
 public class Util {
 
     private static final Scanner SC = new Scanner(System.in);
@@ -34,7 +35,7 @@ public class Util {
     public static float floatInput() {
         return lerComTratamento(() -> {
             float v = SC.nextFloat();
-            SC.nextLine(); // consome o \n
+            SC.nextLine();
             return v;
         });
     }
@@ -74,17 +75,7 @@ public class Util {
         if (nome == null || nome.isBlank()) return false;
         if (email == null || email.isBlank()) return false;
 
-        boolean isValidEmail = false;
-        for (int i = 0; i < email.length(); i++) {
-            if (email.charAt(i) == '@') {
-                isValidEmail = true;
-                break;
-            }
-        }
-
-        boolean senhaValida = senha >= 100000 && senha <= 999999;
-
-        return isValidEmail && senhaValida;
+       return email.contains("@") && senha >= 100000 && senha <= 999999;
     }
 
 }
