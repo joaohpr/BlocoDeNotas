@@ -1,6 +1,10 @@
 package view;
 
+import util.Util;
+
 public class MenuNotas {
+
+    Util util = new Util();
 
     public static String showMenuNotas(){
         return  "\n===== MENU NOTAS =====\n" +
@@ -13,8 +17,12 @@ public class MenuNotas {
     }
 
 
+    public int inputOption() {
+        showMenuNotas();
 
+        int outOption = util.intInput();
 
-
+        return outOption;
+    }
 
 }

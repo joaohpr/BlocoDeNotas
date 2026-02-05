@@ -17,17 +17,5 @@ public class MenuLogin {
 
     }
 
-    public void executar() {
-        int option;
-        boolean run;
-        do{
-
-            run = true;
-
-            option = leOption();
-
-        }while(run);
-    }
-
 
 }
