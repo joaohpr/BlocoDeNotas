@@ -10,11 +10,19 @@ public class MenuLogin {
     }
 
 
-    public int leOption(){
+    public int inputOption(){
         showMenuLogin();
 
         return util.intInput();
 
+    }
+
+    public void showOptionOne(){
+        System.out.println("===== LOGIN ====");
+    }
+
+    public void showOptionTwo() {
+        System.out.println("==== LOGOUT ====");
     }
 
 

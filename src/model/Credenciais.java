@@ -1,17 +1,23 @@
 package model;
 
-import Sessao.Sessao;
+import sessao.Sessao;
 import util.Util;
 
 public class Credenciais {
 
-    private final String nome;
-    private final int senha;
+    private  String nome;
+    private  int senha;
 
     public Credenciais(String nomeInput, int senhaInput) {
         this.nome = nomeInput;
         this.senha = senhaInput;
     }
+
+    public Credenciais(){
+
+    }
+
+
 
     public String getNome() {
         return nome;

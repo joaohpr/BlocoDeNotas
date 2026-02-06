@@ -1,4 +1,4 @@
-package Sessao;
+package sessao;
 
 import dao.UserDAO;
 import model.User;

@@ -25,4 +25,30 @@ public class MenuNotas {
         return outOption;
     }
 
+
+    public void showOptionOneNotas() {
+        System.out.println("==== CRIAR NOTA ====");
+    }
+
+    public void showOptionTwoNotas() {
+        System.out.println("==== EXCLUIR NOTA ====");
+    }
+
+    public void showOptionThreeNotas() {
+        System.out.println("==== ALTERAR TEXTO ====");
+    }
+
+    public void showOptionFourNotas() {
+        System.out.println("==== REMOVER TODAS AS NOTAS ====");
+    }
+
+    public void showOptionFiveNotas() {
+        System.out.println("==== LISTAR NOTAS ====");
+    }
+
+    public void showOptionSixNotas() {
+        System.out.println("==== VOLTAR ====");
+    }
+
+
 }

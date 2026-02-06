@@ -15,12 +15,29 @@ public class MenuMain {
     }
 
 
-    public int leOption(){
+    public int inputOptionMain(){
         showMenuMain();
 
         int optionOfReturn = util.intInput();
 
         return optionOfReturn;
     }
+
+    public void showOptionOneMain() {
+        System.out.println("==== USUÁRIO ====");
+    }
+
+    public void showOptionTwoMain() {
+        System.out.println("==== NOTAS ====");
+    }
+
+    public void showOptionThreeMain() {
+        System.out.println("==== LOGIN / LOGOUT ====");
+    }
+
+    public void showOptionFourMain() {
+        System.out.println("==== SAIR ====");
+    }
+
 
 }
