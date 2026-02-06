@@ -41,6 +41,10 @@ public class Sessao {
         return isLogado ? usuario.getSenhaUser() : -1;
     }
 
+    public User getUser(){
+        return this.usuario;
+    }
+
     @Override
     public String toString() {
         if (!isLogado) {

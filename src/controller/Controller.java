@@ -12,6 +12,11 @@ public class Controller {
     MenuNotas menuNotas = new MenuNotas();
     MenuLogin menuLogin = new MenuLogin();
 
+    LoginController loginController = new LoginController();
+    NotasController notasController = new NotasController();
+    UserController userController = new UserController();
+
+
 
 
 

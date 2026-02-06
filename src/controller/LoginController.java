@@ -8,11 +8,10 @@ import util.Util;
 public class LoginController {
 
     public Util util = new Util();
-    public static Sessao sessao = new Sessao();
     public Credenciais credenciais = new Credenciais();
     public MenuLogin menuLogin = new MenuLogin();
 
-    public void runLogin() {
+    public  void runLogin(Sessao sessaoInput) {
 
         boolean run = true;
 
@@ -23,8 +22,8 @@ public class LoginController {
 
                 case 1 -> {
                     menuLogin.showOptionOne();
-                    credenciais = credenciais.obterCredenciais(sessao, util);
-                    sessao.login(credenciais.getNome(), credenciais.getSenha());
+                    credenciais = credenciais.obterCredenciais(sessaoInput,util);
+                    sessaoInput.login(credenciais.getNome(), credenciais.getSenha());
                     run = false;
                 }
 
@@ -34,7 +33,7 @@ public class LoginController {
                     String resposta = util.stringInput();
 
                     if (resposta.equalsIgnoreCase("s")) {
-                        sessao.logOut();
+                        sessaoInput.logOut();
                         run = false;
                     }
                 }
