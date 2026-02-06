@@ -2,6 +2,7 @@ package service;
 
 import dao.UserDAO;
 import model.User;
+import model.Credenciais;
 import util.Util;
 
 public class UserService {
@@ -18,39 +19,51 @@ public class UserService {
         return util.userIsValid(user);
     }
 
+    private boolean usuarioValido(Credenciais credenciais) {
+        User user = userDao.retornaUser(
+                credenciais.getNome(),
+                credenciais.getSenha()
+        );
+        return util.userIsValid(user);
+    }
+
     public boolean criarUser(String userName, String emailUser, int senhaUser) {
         User user = new User(userName, emailUser, senhaUser);
         if (!usuarioValido(user)) return false;
         return userDao.criarUser(user);
     }
 
-    public boolean removerUser(User user) {
-        if (!usuarioValido(user)) return false;
+    public boolean removerUser(Credenciais credenciais) {
+        if (!usuarioValido(credenciais)) return false;
+        User user = autenticar(
+                credenciais.getNome(),
+                credenciais.getSenha()
+        );
         return userDao.removerUsuario(user);
     }
 
-    public boolean removerUser(String userName, int senha) {
-        User user = autenticar(userName, senha);
-        return removerUser(user);
-    }
+    public boolean mudarNome(Credenciais credenciais, String novoNome) {
+        if (!usuarioValido(credenciais) || novoNome == null || novoNome.isBlank())
+            return false;
 
-    public boolean mudarNome(User user, String novoNome) {
-        if (!usuarioValido(user) || novoNome == null || novoNome.isBlank()) return false;
+        User user = autenticar(
+                credenciais.getNome(),
+                credenciais.getSenha()
+        );
+
         return userDao.mudarNomeUser(user, novoNome);
     }
 
-    public boolean mudarNome(String userName, String novoNome, int senha) {
-        User user = autenticar(userName, senha);
-        return mudarNome(user, novoNome);
-    }
+    public boolean mudarEmail(Credenciais credenciais, String novoEmail) {
+        if (!usuarioValido(credenciais) || novoEmail == null || novoEmail.isBlank())
+            return false;
 
-    public boolean mudarEmail(User user, String novoEmail) {
-        if (!usuarioValido(user) || novoEmail == null || novoEmail.isBlank()) return false;
+        User user = autenticar(
+                credenciais.getNome(),
+                credenciais.getSenha()
+        );
+
         return userDao.mudarEmailUser(user, novoEmail);
     }
-
-    public boolean mudarEmail(String userName, int senha, String novoEmail) {
-        User user = autenticar(userName, senha);
-        return mudarEmail(user, novoEmail);
-    }
 }
+

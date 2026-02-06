@@ -21,12 +21,20 @@ public class NotasService {
         return util.userIsValid(user) ? user : null;
     }
 
+
     private boolean usuarioValido(User user) {
         return util.userIsValid(user);
     }
 
     public boolean criarNota(Credenciais credenciais, String title, String text) {
         User userIn = userDao.retornaUser(credenciais.getNome(), credenciais.getSenha());
+
+
+    public boolean criarNota(Credenciais credenciais, String title, String text) {
+
+        User userIn = userDao.retornaUser(credenciais.getNome(), credenciais.getSenha());
+
+	    (Refatorando a classe UserService para seus metodos receberem o objeto credenciais como parametro)
         if (!usuarioValido(userIn)) return false;
 
         Notas nota = new Notas(title, text);
