@@ -121,7 +121,7 @@ public class Main {
                                     senha = util.intInput();
                                 }
 
-                                if (userService.removerUser(nome, senha)) {
+                                if ( userService.removerUser(nome, senha)) {
                                     System.out.println("Usuário removido.");
                                     sessao.logOut();
                                 } else {
