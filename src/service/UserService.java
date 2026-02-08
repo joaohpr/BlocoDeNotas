@@ -42,7 +42,7 @@ public class UserService {
         return userDao.removerUsuario(user);
     }
 
-    public boolean mudarNome(Credenciais credenciais, String novoNome) {
+    public boolean alterarUserName(Credenciais credenciais, String novoNome) {
         if (!usuarioValido(credenciais) || novoNome == null || novoNome.isBlank())
             return false;
 
@@ -54,7 +54,7 @@ public class UserService {
         return userDao.mudarNomeUser(user, novoNome);
     }
 
-    public boolean mudarEmail(Credenciais credenciais, String novoEmail) {
+    public boolean alterarEmailUser(Credenciais credenciais, String novoEmail) {
         if (!usuarioValido(credenciais) || novoEmail == null || novoEmail.isBlank())
             return false;
 
