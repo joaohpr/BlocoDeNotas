@@ -2,68 +2,75 @@ package service;
 
 import dao.UserDAO;
 import model.User;
-import model.Credenciais;
-import util.Util;
+import sessao.Sessao;
 
 public class UserService {
 
     private final UserDAO userDao = new UserDAO();
-    private final Util util = new Util();
 
-    private User autenticar(String userName, int senha) {
-        User user = userDao.retornaUser(userName, senha);
-        return util.userIsValid(user) ? user : null;
+    public void criarUser(String nome, String email, int senha) {
+
+        boolean criado = userDao.criarUser(nome, email, senha);
+
+        if (!criado) {
+            System.out.println("Não foi possível criar o usuário (dados inválidos ou usuário já existe).");
+            return;
+        }
+
+        System.out.println("Usuário criado com sucesso.");
     }
 
-    private boolean usuarioValido(User user) {
-        return util.userIsValid(user);
+    public void removerUser(Sessao sessao) {
+
+        if (!sessao.estaLogado()) {
+            System.out.println("Nenhum usuário logado.");
+            return;
+        }
+
+        User user = sessao.getUser();
+
+        boolean removido = userDao.removerUser(user);
+
+        if (!removido) {
+            System.out.println("Erro ao remover usuário.");
+            return;
+        }
+
+        sessao.logOut();
+        System.out.println("Usuário removido com sucesso.");
     }
 
-    private boolean usuarioValido(Credenciais credenciais) {
-        User user = userDao.retornaUser(
-                credenciais.getNome(),
-                credenciais.getSenha()
-        );
-        return util.userIsValid(user);
+    public void alterarUserName(Sessao sessao, String novoNome) {
+
+        if (!sessao.estaLogado()) {
+            System.out.println("Nenhum usuário logado.");
+            return;
+        }
+
+        boolean alterado = userDao.alterarNome(sessao.getUser(), novoNome);
+
+        if (!alterado) {
+            System.out.println("Nome inválido.");
+            return;
+        }
+
+        System.out.println("Nome alterado com sucesso.");
     }
 
-    public boolean criarUser(String userName, String emailUser, int senhaUser) {
-        User user = new User(userName, emailUser, senhaUser);
-        if (!usuarioValido(user)) return false;
-        return userDao.criarUser(user);
-    }
+    public void alterarEmailUser(Sessao sessao, String novoEmail) {
 
-    public boolean removerUser(Credenciais credenciais) {
-        if (!usuarioValido(credenciais)) return false;
-        User user = autenticar(
-                credenciais.getNome(),
-                credenciais.getSenha()
-        );
-        return userDao.removerUsuario(user);
-    }
+        if (!sessao.estaLogado()) {
+            System.out.println("Nenhum usuário logado.");
+            return;
+        }
 
-    public boolean alterarUserName(Credenciais credenciais, String novoNome) {
-        if (!usuarioValido(credenciais) || novoNome == null || novoNome.isBlank())
-            return false;
+        boolean alterado = userDao.alterarEmail(sessao.getUser(), novoEmail);
 
-        User user = autenticar(
-                credenciais.getNome(),
-                credenciais.getSenha()
-        );
+        if (!alterado) {
+            System.out.println("Email inválido.");
+            return;
+        }
 
-        return userDao.mudarNomeUser(user, novoNome);
-    }
-
-    public boolean alterarEmailUser(Credenciais credenciais, String novoEmail) {
-        if (!usuarioValido(credenciais) || novoEmail == null || novoEmail.isBlank())
-            return false;
-
-        User user = autenticar(
-                credenciais.getNome(),
-                credenciais.getSenha()
-        );
-
-        return userDao.mudarEmailUser(user, novoEmail);
+        System.out.println("Email alterado com sucesso.");
     }
 }
-

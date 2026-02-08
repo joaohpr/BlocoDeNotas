@@ -1,9 +1,8 @@
 package controller;
 
-import util.Util;
 import sessao.Sessao;
 import service.UserService;
-import model.Credenciais;
+import util.Util;
 import view.MenuUser;
 
 public class UserController {
@@ -11,13 +10,12 @@ public class UserController {
     private final UserService userService = new UserService();
     private final MenuUser menuUser = new MenuUser();
     private final Util util = new Util();
-    private Credenciais credenciais = new Credenciais();
 
-    public void runUserController(Sessao sessaoInput) {
+    public void runUserController(Sessao sessao) {
+
         boolean run = true;
 
         do {
-
             int option = menuUser.outOption();
 
             switch (option) {
@@ -38,39 +36,46 @@ public class UserController {
                 }
 
                 case 2 -> {
-                    menuUser.showOptionTwoUser();
-                    credenciais = Credenciais.obterCredenciais(sessaoInput, util);
+                    if (!sessao.estaLogado()) {
+                        System.out.println("É necessário estar logado.");
+                        break;
+                    }
 
-                    userService.removerUser(credenciais);
+                    menuUser.showOptionTwoUser();
+                    userService.removerUser(sessao);
                 }
 
                 case 3 -> {
+                    if (!sessao.estaLogado()) {
+                        System.out.println("É necessário estar logado.");
+                        break;
+                    }
+
                     menuUser.showOptionThreeUser();
-                    credenciais = Credenciais.obterCredenciais(sessaoInput, util);
 
                     System.out.print("Digite o novo nome: ");
                     String novoNome = util.stringInput();
 
-                    userService.alterarUserName(credenciais, novoNome);
+                    userService.alterarUserName(sessao, novoNome);
                 }
 
                 case 4 -> {
+                    if (!sessao.estaLogado()) {
+                        System.out.println("É necessário estar logado.");
+                        break;
+                    }
+
                     menuUser.showOptionFourUser();
-                    credenciais = Credenciais.obterCredenciais(sessaoInput, util);
 
                     System.out.print("Digite o novo email: ");
                     String novoEmail = util.stringInput();
 
-                    userService.alterarEmailUser(credenciais, novoEmail);
+                    userService.alterarEmailUser(sessao, novoEmail);
                 }
 
-                case 5 -> {
-                    run = false;
-                }
+                case 5 -> run = false;
 
-                default -> {
-                    System.out.println("Opção inválida");
-                }
+                default -> System.out.println("Opção inválida");
             }
 
         } while (run);

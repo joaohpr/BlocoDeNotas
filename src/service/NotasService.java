@@ -1,66 +1,111 @@
 package service;
 
 import dao.NotasDAO;
-import dao.UserDAO;
 import model.Notas;
 import model.User;
-import model.Credenciais;
-import util.Util;
+import sessao.Sessao;
 
 import java.util.List;
 
 public class NotasService {
 
     private final NotasDAO notasDao = new NotasDAO();
-    private final UserDAO userDao = new UserDAO();
-    private final Util util = new Util();
 
-    private User autenticar(Credenciais credenciais) {
-        User user = userDao.retornaUser(
-                credenciais.getNome(),
-                credenciais.getSenha()
-        );
-        return util.userIsValid(user) ? user : null;
-    }
+    public void criarNota(Sessao sessao, String titulo, String texto) {
 
-    public boolean criarNota(Credenciais credenciais, String title, String text) {
-        User user = autenticar(credenciais);
-        if (user == null) return false;
-
-        Notas nota = new Notas(title, text);
-        if (!util.notaIsValid(nota)) return false;
-
-        return notasDao.criarNota(user, title, text);
-    }
-
-    public boolean excluirNota(Credenciais credenciais, int idNota) {
-        User user = autenticar(credenciais);
-        if (user == null || idNota <= 0) return false;
-
-        return notasDao.excluirNota(user, idNota);
-    }
-
-    public boolean alterarNota(Credenciais credenciais, int idNota, String newText) {
-        User user = autenticar(credenciais);
-        if (user == null || idNota <= 0 || newText == null || newText.isBlank()) {
-            return false;
+        if (!sessao.estaLogado()) {
+            System.out.println("Usuário não está logado.");
+            return;
         }
-        return notasDao.alterarNota(user, idNota, newText);
+
+        if (titulo == null || titulo.isBlank() ||
+                texto == null || texto.isBlank()) {
+            System.out.println("Dados da nota inválidos.");
+            return;
+        }
+
+        User user = sessao.getUser();
+        notasDao.criarNota(user, titulo, texto);
+
+        System.out.println("Nota criada com sucesso.");
     }
 
+    public void excluirNota(Sessao sessao, int idNota) {
 
-    public boolean removerTodasNotas(Credenciais credenciais) {
-        User user = autenticar(credenciais);
-        if (user == null) return false;
+        if (!sessao.estaLogado()) {
+            System.out.println("Usuário não está logado.");
+            return;
+        }
 
-        return notasDao.removerTodasNotas(user);
+        if (idNota <= 0) {
+            System.out.println("ID inválido.");
+            return;
+        }
+
+        User user = sessao.getUser();
+        boolean removida = notasDao.excluirNota(user, idNota);
+
+        if (!removida) {
+            System.out.println("Nota não encontrada.");
+            return;
+        }
+
+        System.out.println("Nota removida com sucesso.");
     }
 
-    public List<Notas> listarTodasNotas(Credenciais credenciais) {
-        User user = autenticar(credenciais);
-        if (user == null) return null;
+    public void alterarNota(Sessao sessao, int idNota, String novoTexto) {
 
-        List<Notas> notas = user.bancoDeDadosNotasUser.getNotas();
-        return notas.isEmpty() ? null : notas;
+        if (!sessao.estaLogado()) {
+            System.out.println("Usuário não está logado.");
+            return;
+        }
+
+        if (idNota <= 0 || novoTexto == null || novoTexto.isBlank()) {
+            System.out.println("Dados inválidos.");
+            return;
+        }
+
+        User user = sessao.getUser();
+        boolean alterada = notasDao.alterarTexto(user, idNota, novoTexto);
+
+        if (!alterada) {
+            System.out.println("Nota não encontrada.");
+            return;
+        }
+
+        System.out.println("Nota alterada com sucesso.");
+    }
+
+    public void removerTodasNotas(Sessao sessao) {
+
+        if (!sessao.estaLogado()) {
+            System.out.println("Usuário não está logado.");
+            return;
+        }
+
+        User user = sessao.getUser();
+        notasDao.removerTodas(user);
+
+        System.out.println("Todas as notas foram removidas.");
+    }
+
+    public void listarTodasNotas(Sessao sessao) {
+
+        if (!sessao.estaLogado()) {
+            System.out.println("Usuário não está logado.");
+            return;
+        }
+
+        User user = sessao.getUser();
+        List<Notas> notas = notasDao.listarNotas(user);
+
+        if (notas.isEmpty()) {
+            System.out.println("Nenhuma nota encontrada.");
+            return;
+        }
+
+        for (Notas nota : notas) {
+            System.out.println(nota);
+        }
     }
 }

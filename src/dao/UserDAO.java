@@ -13,15 +13,20 @@ public class UserDAO {
         this.usuarios = BancoDeDadosUser.getInstancia();
     }
 
-    public boolean criarUser(User user) {
-        if (user == null) return false;
-        if (userExiste(user.getUserName(), user.getSenhaUser())) return false;
+    public boolean criarUser(String nome, String email, int senha) {
 
+        if (nome == null || nome.isBlank()) return false;
+        if (email == null || email.isBlank()) return false;
+
+        if (userExiste(nome, senha)) return false;
+
+        User user = new User(nome, email, senha);
         usuarios.addUser(user);
         return true;
     }
 
-    public boolean removerUsuario(User user) {
+    public boolean removerUser(User user) {
+
         if (user == null) return false;
 
         for (int i = 0; i < usuarios.size(); i++) {
@@ -33,14 +38,16 @@ public class UserDAO {
         return false;
     }
 
-    public boolean mudarNomeUser(User user, String novoNome) {
+    public boolean alterarNome(User user, String novoNome) {
+
         if (user == null || novoNome == null || novoNome.isBlank()) return false;
 
         user.setUserName(novoNome);
         return true;
     }
 
-    public boolean mudarEmailUser(User user, String novoEmail) {
+    public boolean alterarEmail(User user, String novoEmail) {
+
         if (user == null || novoEmail == null || novoEmail.isBlank()) return false;
 
         user.setEmailUser(novoEmail);
@@ -52,6 +59,7 @@ public class UserDAO {
     }
 
     public User retornaUser(String nome, int senha) {
+
         List<User> lista = usuarios.getUsuarios();
 
         for (User u : lista) {
@@ -59,7 +67,6 @@ public class UserDAO {
                 return u;
             }
         }
-
         return null;
     }
 }
