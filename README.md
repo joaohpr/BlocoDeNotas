@@ -61,5 +61,5 @@ Caso queira melhorar o projeto:
 
 Autor
 
-Projeto desenvolvido por João  
+Projeto desenvolvido por joaohpr  
 Repositório: https://github.com/joaohpr/BlocoDeNotas

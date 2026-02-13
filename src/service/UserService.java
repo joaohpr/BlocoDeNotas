@@ -3,21 +3,29 @@ package service;
 import dao.UserDAO;
 import model.User;
 import sessao.Sessao;
+import util.Util;
 
 public class UserService {
 
     private final UserDAO userDao = new UserDAO();
+    private final Util util = new Util();
 
     public void criarUser(String nome, String email, int senha) {
 
         boolean criado = userDao.criarUser(nome, email, senha);
 
-        if (!criado) {
+        User user = new User(nome,email,senha);
+
+        boolean isValid = util.userIsValid(user);
+
+
+        if(criado == false && isValid == true) {
+            System.out.println("Usuário criado com sucesso.");
+        } else {
             System.out.println("Não foi possível criar o usuário (dados inválidos ou usuário já existe).");
             return;
         }
 
-        System.out.println("Usuário criado com sucesso.");
     }
 
     public void removerUser(Sessao sessao) {

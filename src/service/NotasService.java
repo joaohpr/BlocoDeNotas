@@ -37,7 +37,7 @@ public class NotasService {
             return;
         }
 
-        if (idNota <= 0) {
+        if (idNota <= 999999) {
             System.out.println("ID inválido.");
             return;
         }
